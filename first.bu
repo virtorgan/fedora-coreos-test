@@ -1,0 +1,45 @@
+variant: fcos
+version: 1.4.0
+passwd:
+  users:
+    - name: daniel
+      groups:
+        - "sudo"
+        - "docker"
+#      ssh_authorized_key:
+#        - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQD4PpBlxORgGjaK0DMObuGL64pxD+tDAPXJJZxX2DjGps/qqCfowuRw8ZKNXJnUsE+7aAFo9Z4XMMiD8LD0v9lHw28R1N4c3JFbSexLKBC79dFEk+d4Hu4VO7vvCzbDFYG+/IL28sxVq16MOnCFMKsfmh/xr1f1xjFcP/G34PnY4K37n/jqe5tbw+kosQlm7LO5oxp1j49u4oBb9REAJiYoHvrn/IaPEIo/84ziaQ7Ca6hRKt3x9usr4ovm5fY4t3AskptNa4V/7tHjRT22s/Z00Xr4MJ1o44mdmLfPV8R0lwL8U0F9E8cJmbeM/+lfM5dTwfkXBSAyRtjo/scbe6EEkyIhewcR4WvXH55jP85fpkB9uKHdpgqKcwg0FKMwcgoRnXOPyOhEXwIC8x1+TOBa9jvCT8noGwI/UNmTtghJZ5S0BiiWPrT+NI4X6wqmWjokTUKjGeaIRfRw/FE5eoy1pk1KJYig7LCXYML1MjLFI2mnV6rky/+2AaRPONqFaLL31EtU+5AlWntGXVjEAdHaNWp+zlEwkd2FvHe2/7fNhuP7oB8xz7L2nKwugj6s2GtSB8AEFpD8sOnD2FjMO0IfzcFN2V568qgliUYmTQNKCQ/rGoTSegVdQBQYFBoXZ3gtdYkdXyG1q5PIlktHTBh3xHaOCf47BFgZ7gLe5PkwOw== infors-ht\piresd@ht-049783405253
+      password_hash: $y$j9T$..9mNVbO/2WZ1ckJBY0ml1$ABk5Ykb9oukKqxzRbmrUX/FmAyS9dDkn/8S8eB8dYVC
+    - name: core
+      groups:
+        - "sudo"
+        - "docker"
+#      ssh_authorized_key:
+#        - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQD4PpBlxORgGjaK0DMObuGL64pxD+tDAPXJJZxX2DjGps/qqCfowuRw8ZKNXJnUsE+7aAFo9Z4XMMiD8LD0v9lHw28R1N4c3JFbSexLKBC79dFEk+d4Hu4VO7vvCzbDFYG+/IL28sxVq16MOnCFMKsfmh/xr1f1xjFcP/G34PnY4K37n/jqe5tbw+kosQlm7LO5oxp1j49u4oBb9REAJiYoHvrn/IaPEIo/84ziaQ7Ca6hRKt3x9usr4ovm5fY4t3AskptNa4V/7tHjRT22s/Z00Xr4MJ1o44mdmLfPV8R0lwL8U0F9E8cJmbeM/+lfM5dTwfkXBSAyRtjo/scbe6EEkyIhewcR4WvXH55jP85fpkB9uKHdpgqKcwg0FKMwcgoRnXOPyOhEXwIC8x1+TOBa9jvCT8noGwI/UNmTtghJZ5S0BiiWPrT+NI4X6wqmWjokTUKjGeaIRfRw/FE5eoy1pk1KJYig7LCXYML1MjLFI2mnV6rky/+2AaRPONqFaLL31EtU+5AlWntGXVjEAdHaNWp+zlEwkd2FvHe2/7fNhuP7oB8xz7L2nKwugj6s2GtSB8AEFpD8sOnD2FjMO0IfzcFN2V568qgliUYmTQNKCQ/rGoTSegVdQBQYFBoXZ3gtdYkdXyG1q5PIlktHTBh3xHaOCf47BFgZ7gLe5PkwOw== infors-ht\piresd@ht-049783405253
+      password_hash: $y$j9T$..9mNVbO/2WZ1ckJBY0ml1$ABk5Ykb9oukKqxzRbmrUX/FmAyS9dDkn/8S8eB8dYVC
+
+storage:
+  files:
+    - path: /etc/hostname
+      mode: 0644
+      contents:
+        inline: |
+          CoreOS
+    - path: /etc/profile.d/systemd-pager.sh
+      mode: 0644
+      contents:
+        inline: |
+          # Tell systemd to not use a pager when printing information
+          export SYSTEMD_PAGER=cat
+    - path: /etc/sysctl.d/20-silence-audit.conf
+      mode: 0644
+      contents:
+        inline: |
+          # Raise console message logging level from DEBUG (7) to WARNING (4)
+          # to hide audit messages from the interactive console
+          kernel.printk=4
+    - path: /etc/ssh/sshd_config.d/20-enable-passwords.conf
+      mode: 0644
+      contents:
+        inline: |
+          # Enable SSH password login
+          PasswordAuthentication yes
